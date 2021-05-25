@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net"
+	"time"
 )
 
 func main(){
@@ -15,11 +16,10 @@ func main(){
 
 		address := fmt.Sprintf("%s:%d",domain, port)
 
-		connection, scanError := net.Dial("tcp", address)
+		connection, scanError := net.DialTimeout("tcp", address, 500*time.Millisecond)
 
 		if scanError != nil {
 			// the port is closed
-			fmt.Printf("Port %d: closed\n", port)
 			continue
 		}
 
