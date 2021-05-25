@@ -5,3 +5,4 @@ A port scanner written in Go, used to train my skills with this new language. Th
 ## Versions
 
 [v1.0] non concurrent
+[v2.0] concurrent with results channel. Fixed number of ports
