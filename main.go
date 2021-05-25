@@ -2,17 +2,32 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net"
 )
 
 func main(){
 
-	_, scanError := net.Dial("tcp", "scanme.nmap.org:80")
+	openPorts := 0
 
-	if scanError != nil {
-		log.Fatal("Scan Error: ", scanError)
+	domain := "scanme.nmap.org"
+
+	for port :=1; port <= 1024; port++{
+
+		address := fmt.Sprintf("%s:%d",domain, port)
+
+		connection, scanError := net.Dial("tcp", address)
+
+		if scanError != nil {
+			// the port is closed
+			fmt.Printf("Port %d: closed\n", port)
+			continue
+		}
+
+		fmt.Printf("Port %d: open\n", port)
+		openPorts++
+		connection.Close()
+
 	}
 
-	fmt.Println("Connection successful")
+	fmt.Printf("Scan result (1-1024):\n\n%s has %d open ports\n", domain, openPorts)
 }
